@@ -1,0 +1,2 @@
+V této složce se nachází soukromé a veřejné klíče, které API používá pro tvorku tokenů.
+Soukromý klíč musí být uložen jako "private_key" a veřejný jako "public_key"

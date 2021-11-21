@@ -1,7 +1,8 @@
 import { Express, Request, Response } from 'express';
 import { craeteUserHandler } from './controller/user.controller';
+import { createUserSessionHandler } from './controller/session.controller';
 import validateRequest from './middleware/validateRequest';
-import { createUserSchema } from './schemas/user.schema';
+import { createUserSchema, createUserSessionSchema } from './schemas/user.schema';
 
 export default function(app: Express){
 
@@ -13,14 +14,15 @@ export default function(app: Express){
 
     /**
      * Registrace akce pro registraci.
-     * POST /api/user
+     * POST /api/users
      */
     app.post('/api/users', validateRequest(createUserSchema), craeteUserHandler);
 
     /**
      * Registrace akce pro přihlášení (vytvářím session).
-     * POST /api/session
+     * POST /api/sessions
      */
+    app.post('/api/sessions', validateRequest(createUserSessionSchema), createUserSessionHandler);
 
     /**
      * Registrace akce pro získání všech aktivních přihlášení.

@@ -19,3 +19,18 @@ export const createUserSchema = object({
             .required('Email is required')
     })
 });
+
+/**
+ * Schéma pro validaci přihlášení.
+ */
+export const createUserSessionSchema = object({
+    body: object({
+        password: string()
+            .required('Password is required')
+            .min(6, 'Password is to short - should be 6 chars minimum.')
+            .matches(/^[a-zA-Z0-9_.-]*$/, 'Password can only contain Latin lettes'),
+        email: string()
+            .email('Must be a valid email')
+            .required('Email is required')
+    })
+});
