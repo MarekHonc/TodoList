@@ -1,8 +1,10 @@
 import { FlattenMaps, LeanDocument } from 'mongoose';
 import config from 'config';
+import { get } from 'lodash';
 import Session, { SessionDocument } from '../model/session.model';
 import { UserDocument } from '../model/user.model';
-import { sign } from '../utils/jwt.utils'
+import { sign, decode } from '../utils/jwt.utils';
+import { findUser } from '../service/user.service';
 
 /**
  * Vytvoří novou session (přihlášení) pro uživatele.
@@ -40,5 +42,42 @@ export function createAccessToken({
     );
 
     // Vrátím ho.
+    return accessToken;
+}
+
+/**
+ * Fukce, která obnoví platnost tokenu.
+ * @param param0 objekt s refresh tokenem.
+ */
+export async function reIssueAccesToken({
+    refreshToken
+} : {
+    refreshToken: string
+}) {
+    // Dekóduji refresh token.
+    const { decoded } = decode(refreshToken);
+
+    // Pokud se nepodařilo refresh token dekódovat nebo na sobě nená _id, vracím false.
+    if(!decoded || !get(decoded, "_id"))
+        return false;
+
+    // Získám si session.
+    const session = await Session.findById(!get(decoded, "_id"));
+
+    // Zkontroluji platnost session.
+    if(!session || !session?.valid)
+        return false;
+
+    // Získám uživatele.
+    const user = await findUser({ _id: session.user });
+
+    // Uživatel nebyl dohledán.
+    if(!user)
+        return false;
+
+    // Vytvořím nový access token.
+    const accessToken = createAccessToken({ user, session });
+
+    // A vrátím ho.
     return accessToken;
 }

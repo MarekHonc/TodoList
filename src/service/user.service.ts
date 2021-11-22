@@ -1,5 +1,5 @@
 import { omit } from 'lodash';
-import { DocumentDefinition } from 'mongoose';
+import { DocumentDefinition, FilterQuery } from 'mongoose';
 import User, {UserDocument} from '../model/user.model';
 
 /**
@@ -15,14 +15,19 @@ export async function createUser(input: DocumentDefinition<UserDocument>) {
     }
 }
 
-function findUser() {
-
+/**
+ * Vyhledá uživatele v databázi.
+ * @param query query, podle které se uživatel hledá.
+ * @returns nalezeného uživatele.
+ */
+export async function findUser(query: FilterQuery<UserDocument>) {
+    return User.findOne(query).lean();
 }
 
 /**
  * Vrací, zda-li se podařilo uživateli zadat správné heslo.
  * @param param0 objekt s emailem a heslem {email, password }.
- * @returns 
+ * @returns zda-li se heslo shoduje s uloženým.
  */
 export async function validatePassword({
     email,
