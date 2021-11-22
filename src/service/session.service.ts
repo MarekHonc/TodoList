@@ -1,4 +1,4 @@
-import { FlattenMaps, LeanDocument } from 'mongoose';
+import { FilterQuery, FlattenMaps, LeanDocument, UpdateQuery } from 'mongoose';
 import config from 'config';
 import { get } from 'lodash';
 import Session, { SessionDocument } from '../model/session.model';
@@ -17,6 +17,15 @@ export async function createSession(userId: string, userAgent: string){
 
     // A vrátím ji.
     return session.toJSON();
+}
+
+/**
+ * Updatuje již vytvořenou session.
+ * @param query query, podle které vyhledá session k upravení.
+ * @param update query, která session upravuje.
+ */
+export async function updateSession(query: FilterQuery<SessionDocument>, update: UpdateQuery<SessionDocument>) {
+    return Session.updateOne(query, update);
 }
 
 /**
@@ -62,7 +71,7 @@ export async function reIssueAccesToken({
         return false;
 
     // Získám si session.
-    const session = await Session.findById(!get(decoded, "_id"));
+    const session = await Session.findById(get(decoded, "_id"));
 
     // Zkontroluji platnost session.
     if(!session || !session?.valid)
@@ -80,4 +89,22 @@ export async function reIssueAccesToken({
 
     // A vrátím ho.
     return accessToken;
+}
+
+/**
+ * Vyhledá všechny sessions odpovídající dotazu.
+ * @param query vyhledáváací query.
+ * @returns sessions nalezeně podle query.
+ */
+export async function findSessions(query: FilterQuery<SessionDocument>) {
+    return Session.find(query).lean();
+}
+
+/**
+ * Vyhledá session v databázi.
+ * @param query query, podle které se session hledá.
+ * @returns nalezenou session.
+ */
+ export async function findSession(query: FilterQuery<SessionDocument>) {
+    return Session.findOne(query).lean();
 }

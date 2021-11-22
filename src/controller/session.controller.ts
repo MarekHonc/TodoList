@@ -1,8 +1,9 @@
 import { validatePassword } from "../service/user.service";
 import { Request, Response } from 'express';
-import { createAccessToken, createSession } from "../service/session.service";
+import { createAccessToken, createSession, updateSession, findSessions } from "../service/session.service";
 import config from 'config';
-import { sign } from '../utils/jwt.utils'
+import { get } from 'lodash';
+import { sign } from '../utils/jwt.utils';
 
 /**
  * Akce sloužící pro přihlášení uživatele (vytvoří session).
@@ -30,4 +31,36 @@ import { sign } from '../utils/jwt.utils'
 
     // A vrátím vytvořené tokeny.
     return res.send({ accessToken, refreshToken });
+}
+
+/**
+ * Akce sloužící pro odhlášení uživatele (zneplatní session).
+ * @param req objekt http requestu.
+ * @param res objekt http odpovědi.
+ */
+export async function invalidateUserSessionHandler(req: Request, res: Response) {
+    // Získám id session z requestu.
+    const sessionId = get(req, "user.session");
+
+    // Updatuji session.
+    await updateSession({ _id: sessionId }, { valid: false });
+
+    // Vše proběhlo ok.
+    return res.sendStatus(200);
+}
+
+/**
+ * Akce sloužící pro získání všech aktivních přihlášení uživatele.
+ * @param req objekt http requestu.
+ * @param res objekt http odpovědi.
+ */
+export async function getUserSessionsHandler(req: Request, res: Response) {
+    // Získám is uživatele z requestu.
+    const userId = get(req, "user._id");
+
+    // Najdu všechny jeho přihlášení.
+    const sessions = await findSessions({ user: userId, valid: true });
+
+    // A vrátím je.
+    return res.send(sessions);
 }

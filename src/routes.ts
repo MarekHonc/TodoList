@@ -1,7 +1,7 @@
 import { Express, Request, Response } from 'express';
 import { craeteUserHandler } from './controller/user.controller';
-import { createUserSessionHandler } from './controller/session.controller';
-import validateRequest from './middleware/validateRequest';
+import { createUserSessionHandler, invalidateUserSessionHandler, getUserSessionsHandler } from './controller/session.controller';
+import { validateRequest, requiresUser } from './middleware';
 import { createUserSchema, createUserSessionSchema } from './schemas/user.schema';
 
 export default function(app: Express){
@@ -28,9 +28,11 @@ export default function(app: Express){
      * Registrace akce pro získání všech aktivních přihlášení.
      * GET /api/sessions
      */
+    app.get('/api/sessions', requiresUser, getUserSessionsHandler)
 
     /**
      * Registrace akce pro odhlášení (mažu session).
      * DELETE /api/sessions
      */
+    app.delete('/api/sessions', requiresUser, invalidateUserSessionHandler);
 }
