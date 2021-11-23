@@ -1,7 +1,7 @@
 import { get } from 'lodash';
 import { Request, Response, NextFunction } from 'express';
 import { decode } from '../utils/jwt.utils';
-import { reIssueAccesToken } from '../service/session.service';
+import { findSession, reIssueAccesToken } from '../service/session.service';
 
 /**
  * Pokusí se získat uživatele na zákaldně přihlašovacíh tokenů.
@@ -25,9 +25,14 @@ const deserializeUser = async (req: Request, res: Response, next: NextFunction) 
 
     // Pokud se podařilo dekódovat.
     if(decoded) {
-        // Nastavím do kontextu requestu uživatele.
-        // @ts-ignore 
-        req.user = decoded;
+        // Získám ještě session
+        const session = await findSession({ _id: get(decoded, "session") });
+
+        // Nastavím do kontextu requestu uživatele - pouze pokud je session stále platná.
+        if(session && session.valid) {
+            // @ts-ignore
+            req.user = decoded;
+        }
 
         // Vracím další akci.
         return next();
