@@ -9,11 +9,11 @@ import AuthService from './services/auth.service';
 
 function App() {
   const isAuthenticated = AuthService.isLogged();
-  let rand = Math.random();
   
   return (
     <Router>
       <main className="min-h-screen bg-gray-50 flex flex-col">
+        <div style={styles.absolute}>Reloaded: {Math.floor(Math.random() * 1000)}</div>
         <Routes>
           {/* 
             Private routes
@@ -35,5 +35,13 @@ function App() {
     </Router>
   );
 }
+
+const styles = {
+  absolute: {
+    position: 'absolute',
+    top: 0,
+    left: 0
+  },
+} as const;
 
 export default App;
