@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { config, routes } from '../config';
 import authHeader from './auth.header';
+import defaultHeader from './default.header';
 
 /**
  * Služba pro autorizaci pomocí JWT vůči Api.
@@ -11,7 +12,7 @@ class AuthService {
      * @param userName uživatelské jméno.
      * @param password heslo.
      */
-    async logIn({
+    logIn({
         userName,
         password
     }:{
@@ -22,7 +23,7 @@ class AuthService {
             .post(config.apiUrl + routes.sessions, {
                 email: userName,
                 password
-            })
+            }, defaultHeader)
             .then(response => {
                 // 200 - přihlášení proběhlo úspěšně.
                 if(response.status == 200){
@@ -35,6 +36,8 @@ class AuthService {
                             refreshToken: response.data.refreshToken
                         })
                     );
+
+                    console.log("saved");
                 }
                 
                 // Vracím odpověď serveru.
@@ -73,7 +76,7 @@ class AuthService {
         return axios
             .post(config.apiUrl + routes.users, {
                 name,
-                userName,
+                email: userName,
                 password,
                 passwordConfirmation
             });

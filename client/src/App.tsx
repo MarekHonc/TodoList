@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
@@ -8,7 +8,8 @@ import * as Components from './components';
 import AuthService from './services/auth.service';
 
 function App() {
-  const isAuthenticated = AuthService.isLogged();
+  // Handler pro notifikaci o přihlášení.
+  const [ isAuthenticated, setIsAutheticated ] = useState(AuthService.isLogged());
   
   return (
     <Router>
@@ -18,13 +19,14 @@ function App() {
           {/* 
             Private routes
           */}
-          <Route path="/" element={isAuthenticated ? <Components.TextComponent/> : <Navigate to="/login" />} />
+          <Route path="/" element={isAuthenticated ? <Components.TextComponent /> : <Navigate to="/login" />} />
 
           {/*
             Session routes  
           */}
-          <Route path="login" element={!isAuthenticated ? <Components.LoginComponent/> : <Navigate to="/" />} />
-          <Route path="register" element={!isAuthenticated ? <Components.RegisterComponent/> : <Navigate to="/" />} />
+          <Route path="login" element={!isAuthenticated ? <Components.LoginComponent setAutheticated={setIsAutheticated} /> : <Navigate to="/" />} />
+          <Route path="loginRedirect" element={!isAuthenticated ? <Components.LoginRedirect /> : <Navigate to = "/"/>} />
+          <Route path="register" element={!isAuthenticated ? <Components.RegisterComponent /> : <Navigate to="/" />} />
 
           {/*
             404

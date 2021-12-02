@@ -1,5 +1,6 @@
 import { config } from "../config";
 import { AxiosRequestHeaders } from "axios";
+import defaultHeader from "./default.header";
 
 /**
  * Vrací hlavičku s autorizací, pokud je uživatel přihlášen.
@@ -17,6 +18,7 @@ export default function authHeader() {
         // Mám oba tokeny
         if(user.acessToken && user.refreshToken){
             var headers : AxiosRequestHeaders = {
+                'Content-type': 'application/json',
                 'Authorization': 'Bearer' + user.acessToken,
                 'x-refresh': user.refreshToken
             }
@@ -26,5 +28,5 @@ export default function authHeader() {
     }
 
     // Vracím prázný objekt.
-    return {};
+    return defaultHeader;
 }
