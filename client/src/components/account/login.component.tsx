@@ -22,7 +22,7 @@ interface Props {
 /**
  * Formulář pro přihlášení uživatele.
  */
-function LoginComponent(props : Props) {
+function Login(props : Props) {
     // Deklarace hook form pro práci s formulářem.
     const { register, handleSubmit, formState: {errors}} = useForm<FormData>({ mode: "onChange" });
 
@@ -122,4 +122,4 @@ function LoginComponent(props : Props) {
     )
 }
 
-export default LoginComponent;
+export default Login;

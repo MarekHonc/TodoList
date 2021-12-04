@@ -26,18 +26,16 @@ class AuthService {
             }, defaultHeader)
             .then(response => {
                 // 200 - přihlášení proběhlo úspěšně.
-                if(response.status == 200){
+                if(response.status === 200){
                     // Uložím token do storage.
                     localStorage.setItem(
                         config.userStorageKey,
                         JSON.stringify({
                             userName,
-                            acessToken: response.data.acessToken,
+                            acessToken: response.data.accessToken,
                             refreshToken: response.data.refreshToken
                         })
                     );
-
-                    console.log("saved");
                 }
                 
                 // Vracím odpověď serveru.
@@ -48,21 +46,21 @@ class AuthService {
     /**
      * Funkce pro odhlášení uživatele.
      */
-    async logOut() {
-        // Odeberu klíče z lokální storage.
-        localStorage.removeItem(config.userStorageKey);
-
+    logOut() {
         // A smažu odhlášení i ze serveru.
         return axios
             .delete(config.apiUrl + routes.sessions, {
-                headers: authHeader()
-            })
+                headers : authHeader(),
+            }).then(() => {
+                // Odeberu klíče z lokální storage.
+                localStorage.removeItem(config.userStorageKey);
+            });
     }
 
     /**
      * Funkce pro registraci uživatele.
      */
-    async register({
+    register({
         name,
         userName,
         password,

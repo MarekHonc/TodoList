@@ -16,7 +16,7 @@ interface FormData {
 /**
  * Formulář pro registraci uživatele.
  */
-function RegisterComponent() {
+function Register() {
     // Deklarace hook form pro práci s formulářem.
     const { register, watch, handleSubmit, formState: {errors}} = useForm<FormData>({ mode: "onChange" });
 
@@ -134,4 +134,4 @@ function RegisterComponent() {
     )
 }
 
-export default RegisterComponent;
+export default Register;

@@ -17,12 +17,12 @@ export default function authHeader() {
 
         // Mám oba tokeny
         if(user.acessToken && user.refreshToken){
-            var headers : AxiosRequestHeaders = {
-                'Content-type': 'application/json',
-                'Authorization': 'Bearer' + user.acessToken,
+            var headers : AxiosRequestHeaders = { 
+                ...defaultHeader,
+                'Authorization': 'Bearer ' + user.acessToken,
                 'x-refresh': user.refreshToken
-            }
-            
+            };
+
             return headers
         }
     }

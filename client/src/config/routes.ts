@@ -1,7 +1,9 @@
 /**
  * Url cesty na api.
  */
-export default {
+const routes = {
     sessions: "sessions",
     users: "users"
 }
+
+export default routes;
