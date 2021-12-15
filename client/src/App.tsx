@@ -39,6 +39,7 @@ function App() {
               Private routes
             */}
             <Route path="/" element={isAuthenticated ? <Components.TextComponent /> : <Navigate to="/login" />} />
+            <Route path="categories" element={isAuthenticated ? <Components.CategoryList /> : <Navigate to="/login" />} />
 
             {/*
               Session routes  
@@ -64,7 +65,7 @@ const styles = {
     top: 0,
     left: 0,
     zIndex: 20 
-  },
+  }
 } as const;
 
 export default App;

@@ -111,6 +111,6 @@ export async function deleteCategoryHandler(req: Request, res: Response) {
 /**
  * Vrací id kategorie z url parametrů.
  */
-const getCategoryId = (req: Request) => {
-    return get(req.params, "params.categoryId");
+function getCategoryId(req: Request) {
+    return get(req, "params.categoryId");
 };

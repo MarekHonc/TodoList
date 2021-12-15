@@ -87,7 +87,7 @@ function Navigation(props: NavbarProps) {
 					</div>
 				</div>
 			</div>
-            <div className={"transition duration-500 md:hidden w-full md:flex md:items-center md:w-auto bg-white shadow-lg absolute z-10 " + (mobileHidden ? "hidden" : "")}>
+            <div className={"transition duration-500 md:hidden w-full md:items-center md:w-auto bg-white shadow-lg absolute z-10 " + (mobileHidden ? "hidden" : "")}>
                 <ul className="flex-col md:flex-row flex md:space-x-8 md:mt-0 md:text-sm md:font-medium p-4">
                     <li className="py-1">
                         <Link to="/" className={(currentPage === "/" || currentPage !== "/categories") ? mobileSelected : monileNotSelected} onClick={() => setCurrentPage("/")}>Úkoly</Link>	

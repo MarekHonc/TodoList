@@ -16,7 +16,7 @@ const requestBody = {
  */
 const urlParams = {
     params: object({
-        categoryId: number().required('CategoryId is required')
+        categoryId: string().required('CategoryId is required')
     })
 }
 

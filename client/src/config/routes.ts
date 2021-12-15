@@ -3,7 +3,8 @@
  */
 const routes = {
     sessions: "sessions",
-    users: "users"
+    users: "users",
+    categories: "categories"
 }
 
 export default routes;
