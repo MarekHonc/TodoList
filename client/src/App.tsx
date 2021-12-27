@@ -18,9 +18,7 @@ function App() {
   
   return (
     <Router>
-      <main className="min-h-screen bg-gray-50 flex flex-col w-screen h-screen">
-        <div style={styles.absolute}>Reloaded: {Math.floor(Math.random() * 1000)}</div>
-        
+      <main className="min-h-screen bg-gray-50 flex flex-col w-screen h-screen">        
         {
           isAuthenticated ?
             <Components.Navbar 
@@ -58,14 +56,5 @@ function App() {
     </Router>
   );
 }
-
-const styles = {
-  absolute: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    zIndex: 20 
-  }
-} as const;
 
 export default App;
