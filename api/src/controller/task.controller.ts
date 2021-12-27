@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { get } from 'lodash';
+import log from '../logger';
 import { createTask, findTask, findTasks, updateTask, deleteTask } from '../service/task.service';
 import { getUserId } from '../utils/request.utils';
 
@@ -67,6 +68,8 @@ export async function getTaskHandler(req: Request, res: Response) {
         owner: getUserId(req)
     };
 
+    log.info(identifier);
+
     // Zkusím získat úkol.
     const task = await findTask(identifier);
 
@@ -108,5 +111,5 @@ export async function deleteTaskHandler(req: Request, res: Response) {
  * Vrací id kategorie z url parametrů.
  */
  const getTaskId = (req: Request) => {
-    return get(req.params, "params.taskId");
+    return get(req, "params.taskId");
 };

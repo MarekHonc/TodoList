@@ -7,7 +7,7 @@ export { default as Logout } from './account/logout.component';
 // Dashboard komponenty.
 export { default as Navbar } from './navigation.component';
 export { default as CategoryList } from './category/category.list.component';
-export { default as TextComponent } from './text.component';
+export { default as TaskList } from './tasks/task.list.component';
 
 // Error komponenty.
 export { default as NotFound } from './errors/notfound.component';

@@ -4,7 +4,8 @@
 const routes = {
     sessions: "sessions",
     users: "users",
-    categories: "categories"
+    categories: "categories",
+    tasks: "tasks"
 }
 
 export default routes;

@@ -36,7 +36,7 @@ function App() {
             {/* 
               Private routes
             */}
-            <Route path="/" element={isAuthenticated ? <Components.TextComponent /> : <Navigate to="/login" />} />
+            <Route path="/" element={isAuthenticated ? <Components.TaskList /> : <Navigate to="/login" />} />
             <Route path="categories" element={isAuthenticated ? <Components.CategoryList /> : <Navigate to="/login" />} />
 
             {/*

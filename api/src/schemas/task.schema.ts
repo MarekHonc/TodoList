@@ -8,7 +8,7 @@ const requestBody = {
     body: object({
         name: string().required('Name is required'),
         description: string(),
-        category: number().required("Category is required"),
+        category: string().required("Category is required"),
         status: string().required("Status is required").oneOf(Object.keys(status)),
         priority: string().required("Priority is required").oneOf(Object.keys(priority)),
         deadline: date().required("Deadline is required").min(new Date()),
@@ -20,7 +20,7 @@ const requestBody = {
  */
 const urlParams = {
     params: object({
-        categoryId: number().required('TaskId is required')
+        taskId: string().required('TaskId is required')
     })
 }
 

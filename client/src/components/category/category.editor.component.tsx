@@ -27,7 +27,7 @@ function CategoryEditor(props: EditorProps) {
                 setValue("color", response.color);
             });
         }
-    }, [props.id]);
+    }, [props.id, setValue]);
 
     // Handler pro submit formuláře.
     const onSubmit = handleSubmit(({name, description, color}) => {
