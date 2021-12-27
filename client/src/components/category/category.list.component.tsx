@@ -3,6 +3,7 @@ import CategoryEditor from "./category.editor.component";
 import { modalTypes } from "../../code/modal.open.states";
 import CategoryGrid from "./category.grid.component";
 import CategoryService from "../../services/category.service";
+import CategoryDelete from "./category.delete.component";
 
 /**
  * Komponeneta pro zobrazení všech kategorií.
@@ -59,6 +60,9 @@ function CategoryList() {
                     }
                     {currentEditor === modalTypes.update &&
                         <CategoryEditor title="Úprava kategorie" modalType={modalTypes.update} close={setCurrentEditor} onSuccess={(message) => showEditorMessage(message)} id={selectedCategory} />
+                    }
+                    {currentEditor === modalTypes.delete &&
+                        <CategoryDelete title="Smazání kategorie" modalType={modalTypes.delete} close={setCurrentEditor} onSuccess={(message) => showEditorMessage(message)} id={selectedCategory} />
                     }
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3" onClick={() => setCurrentEditor(modalTypes.create)}>
                         + Přidat kategorii

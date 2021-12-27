@@ -25,7 +25,7 @@ const Modal: FC<ModalProps> = (props) => {
                 <div className="relative inline-block align-bottom bg-white text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
                     <h1 className="text-2xl m-4 pb-4 mb-0 border-b-2">
                         {props.title}
-                        <span className="absolute top-2 bottom-0 right-0 px-4 py-3" onClick={() => props.close(modalTypes.closed)}>
+                        <span className="absolute top-2 right-0 px-4 py-3" onClick={() => props.close(modalTypes.closed)}>
                             <svg className="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Zavřít</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
                         </span>
                     </h1>
@@ -38,14 +38,16 @@ const Modal: FC<ModalProps> = (props) => {
                                 {props.modalType === modalTypes.delete &&
                                     <input
                                         type="submit"
-                                        value="Uložit"
-                                        className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                                        value="Smazat"
+                                        className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5 cursor-pointer"
                                     />
                                 }
                                 {(props.modalType === modalTypes.create || props.modalType === modalTypes.update) &&
-                                    <button type="submit" className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-blue-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-                                        Uložit
-                                    </button>
+                                    <input
+                                        type="submit"
+                                        value="Uložit"
+                                        className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-blue-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5 cursor-pointer"
+                                    />
                                 }
                             </span>
                             <span className="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">

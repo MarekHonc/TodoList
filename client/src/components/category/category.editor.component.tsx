@@ -16,11 +16,17 @@ interface EditorProps extends ModalProps {
  */
 function CategoryEditor(props: EditorProps) {
     // Deklarace hook form pro práci s formulářem.
-    const { register, handleSubmit, formState: {errors}} = useForm<Category>({ mode: "onChange" });
+    const { register, handleSubmit, setValue, formState: {errors}} = useForm<Category>({ mode: "onChange" });
 
     // Natáhnu údaje o potencionální kategorii.
     useEffect(() => {
-        CategoryService.get(props.id || "").then(response => console.log(response));
+        if(props.id){
+            CategoryService.get(props.id || "").then(response => {
+                setValue("name", response.name);
+                setValue("description", response.description);
+                setValue("color", response.color);
+            });
+        }
     }, [props.id]);
 
     // Handler pro submit formuláře.

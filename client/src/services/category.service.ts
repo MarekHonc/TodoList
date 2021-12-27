@@ -84,6 +84,15 @@ class CategoryService {
             return response.data;
         });
     }
+
+    /**
+     * Funkce pro smazání konkrétní kategorie.
+     */
+    delete(id: string) {
+        return axios.delete(config.apiUrl + routes.categories + "/" + id, {
+            headers: authHeader()
+        });
+    }
 }
 
 export default new CategoryService();
