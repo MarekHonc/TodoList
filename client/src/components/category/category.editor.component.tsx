@@ -57,6 +57,7 @@ function CategoryEditor(props: EditorProps) {
                     {...register("name", {
                         required: true
                     })}
+                    autoFocus
                     name="name"
                     id="name"
                     style={{ borderColor: errors.name ? "red" : "" }}

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { get } from 'lodash';
-import log from '../logger';
+import log from '../logger'
 import { createTask, findTask, findTasks, updateTask, deleteTask } from '../service/task.service';
 import { getUserId } from '../utils/request.utils';
 
@@ -50,7 +50,20 @@ export async function updateTaskHandler(req: Request, res: Response) {
  */
 export async function getTasksHandler(req: Request, res: Response) {
     // Stáhnu všechy úkoly aktuálně přihlášeného uživatele.
-    const categories = await findTasks({ owner: getUserId(req) });
+    let categories;
+
+    const onlyDoneRes = onlyDone(req);
+    log.info(onlyDoneRes);
+    log.info(typeof(onlyDoneRes));
+
+    if(onlyDoneRes) {
+        log.info("TRUE");
+        categories = await findTasks({ owner: getUserId(req), status: { $lt: 20 } })
+    }
+    else {
+        log.info("FALSE");
+        categories = await findTasks({ owner: getUserId(req) });
+    }
 
     // A vrátím je.
     return res.send(categories);
@@ -67,8 +80,6 @@ export async function getTaskHandler(req: Request, res: Response) {
         _id: getTaskId(req),
         owner: getUserId(req)
     };
-
-    log.info(identifier);
 
     // Zkusím získat úkol.
     const task = await findTask(identifier);
@@ -110,6 +121,13 @@ export async function deleteTaskHandler(req: Request, res: Response) {
 /**
  * Vrací id kategorie z url parametrů.
  */
- const getTaskId = (req: Request) => {
+const getTaskId = (req: Request) => {
     return get(req, "params.taskId");
 };
+
+/**
+ * Vrací, zda-li se mají získa tpouze hotové úkoly.
+ */
+const onlyDone = (req: Request) => {
+    return JSON.parse(get(req, "params.onlyDone"));
+}

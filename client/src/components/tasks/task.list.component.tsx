@@ -16,6 +16,9 @@ function TaskList() {
     // Aktuální otevřený editor.
     const [ currentEditor, setCurrentEditor ] = useState(modalTypes.closed);
 
+    // Příznak, zda-li chci všechny tasky nebo pouze ty hotové.
+    const [ onlyDone, setOnlyDone ] = useState(false);
+
     // Selektor pro vybranou kategorii.
     const [ selectedTask, setSelectedTask ] = useState("");
 
@@ -41,15 +44,19 @@ function TaskList() {
             const dictionary = Object.assign({}, ...data.map((x: ExtendedCategory) => ({[x._id]: x})));
             setCategories(dictionary);
         }).then(() => {
-            TaskService.getAll().then(data => setTasks(data));
+            TaskService.getAll(onlyDone).then(data => setTasks(data));
         });
-    }, [currentEditor]);
+    }, [currentEditor, onlyDone]);
 
     return(
         <div className="py-12">
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div className="bg-white overflow-hidden shadow-xl px-4 py-4">
                     <h1 className="pb-4 border-b-2 text-2xl">Úkoly</h1>
+                    <div className="float-right m-4">
+                        <input id="onlyDone" type="checkbox" className="h-4 w-4 rounded" checked={onlyDone} onChange={() => setOnlyDone(!onlyDone)} />
+                        <label htmlFor="onlyDone" className="ml-2 text-sm">Pouze nehotové</label>
+                    </div>
                     {showMessage &&
                         <div className="border-2 rounded-md px-4 py-3 shadow-md my-3 absolute z-20 top-16 w-40 bg-white left-1/2 -ml-20" role="alert">
                             <div className="flex">
@@ -63,13 +70,13 @@ function TaskList() {
                         </div>
                     }
                     {currentEditor === modalTypes.create &&
-                        <TaskEditor title="Nová kategorie" modalType={modalTypes.create} close={setCurrentEditor} onSuccess={(message) => showEditorMessage(message)} />
+                        <TaskEditor title="Nový úkol" modalType={modalTypes.create} close={setCurrentEditor} onSuccess={(message) => showEditorMessage(message)} />
                     }
                     {currentEditor === modalTypes.update &&
-                        <TaskEditor title="Úprava kategorie" modalType={modalTypes.update} close={setCurrentEditor} onSuccess={(message) => showEditorMessage(message)} id={selectedTask} />
+                        <TaskEditor title="Úprava úkolu" modalType={modalTypes.update} close={setCurrentEditor} onSuccess={(message) => showEditorMessage(message)} id={selectedTask} />
                     }
                     {currentEditor === modalTypes.delete &&
-                        <TaskDelete title="Smazání kategorie" modalType={modalTypes.delete} close={setCurrentEditor} onSuccess={(message) => showEditorMessage(message)} id={selectedTask} />
+                        <TaskDelete title="Smazání úkolu" modalType={modalTypes.delete} close={setCurrentEditor} onSuccess={(message) => showEditorMessage(message)} id={selectedTask} />
                     }
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3" onClick={() => setCurrentEditor(modalTypes.create)}>
                         + Přidat úkol

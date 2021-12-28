@@ -16,7 +16,13 @@ export interface ModalProps extends PropsWithChildren<any> {
  */
 const Modal: FC<ModalProps> = (props) => {
     return(
-        <div className="fixed z-50 inset-0 overflow-y-auto ease-out duration-400">
+        <div
+            className="fixed z-50 inset-0 overflow-y-auto ease-out duration-400"
+            onKeyDown={(event) => {
+                if(event.key === 'Escape') {
+                    props.close(modalTypes.closed);
+                }
+            }}>
             <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                 <div className="fixed inset-0 transition-opacity">
                     <div className="absolute inset-0 bg-gray-500 opacity-75"></div>

@@ -96,7 +96,7 @@ function Login(props : Props) {
                                 {errors.password && errors.password.type === "required" && "Heslo je povinné"}
                             </span>
                         </div>
-                        <div className="flex items-center justify-between">
+                        {/*<div className="flex items-center justify-between">
                             <div className="flex items-center">
                                 <input
                                     {...register("rememberMe")}
@@ -106,7 +106,7 @@ function Login(props : Props) {
                                 />
                                 <label htmlFor="rememberMe" className="ml-2 text-sm text-gray-600">Pamatovat si mě</label>
                             </div>
-                        </div>
+                        </div>*/}
                         <div>
                             <span className="text-sm text-red-500 mt-2 block">
                                 { loginFailed && "Zadaný přihlašovací e-mail nebo heslo není správné" }

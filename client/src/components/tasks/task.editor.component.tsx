@@ -81,6 +81,7 @@ function TaskEditor(props: EditorProps) {
                     {...register("name", {
                         required: true
                     })}
+                    autoFocus
                     name="name"
                     id="name"
                     style={{ borderColor: errors.name ? "red" : "" }}
@@ -144,9 +145,9 @@ function TaskEditor(props: EditorProps) {
                     style={{ borderColor: errors.priority ? "red" : "" }}
                     className="shadow border rounded w-full py-2 px-3 text-gray-700 mt-1"
                 >
-                    <option value={priority.minor}>Malá</option>
-                    <option value={priority.normal}>Normální</option>
-                    <option value={priority.major}>Velká</option>
+                    <option value={priority.minor}>Nízká</option>
+                    <option value={priority.normal}>Střední</option>
+                    <option value={priority.major}>Vysoká</option>
                     <option value={priority.critical}>Kritická</option>
                 </select>
                 <span className="text-sm text-red-500 mt-2 block">
@@ -165,7 +166,7 @@ function TaskEditor(props: EditorProps) {
                     className="shadow border rounded w-full py-2 px-3 text-gray-700 mt-1"
                 >
                     <option value={status.open}>Otevřeno</option>
-                    <option value={status.in_progress}>Zpracováváno</option>
+                    <option value={status.in_progress}>Rozpracováno</option>
                     <option value={status.done}>Hotovo</option>
                 </select>
                 <span className="text-sm text-red-500 mt-2 block">

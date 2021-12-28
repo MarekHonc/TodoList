@@ -99,8 +99,8 @@ export interface ExtendedTask extends Task {
     /**
      * Funkce, která vrací všechny vytvořené úkoly.
      */
-    getAll() {
-        return axios.get(config.apiUrl + routes.tasks, {
+    getAll(onlyDone: boolean) {
+        return axios.get(config.apiUrl + routes.allTasks + "/" + onlyDone, {
             headers: authHeader()
         }).then(response => {
             return response.data;

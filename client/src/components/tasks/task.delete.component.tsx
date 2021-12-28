@@ -26,6 +26,8 @@ function TaskDelete(props: DeleteProps) {
 
     return (
         <Modal {...props} onSubmit={onSumbit} >
+            {/* Trošku hack jak překecat focus */}
+            <input type="text" className="absolute" autoFocus style={{ zIndex: -1 }} />
             <p>Opravdu si přejede smazat tento úkol?</p>
         </Modal>
     )

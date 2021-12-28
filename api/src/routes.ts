@@ -88,7 +88,7 @@ export default function(app: Express){
      * Registrace akce pro získání všech úkolů.
      * GET /api/tasks
      */
-    app.get('/api/tasks', requiresUser, getTasksHandler);
+    app.get('/api/alltasks/:onlyDone', requiresUser, getTasksHandler);
      
     /**
      * Registrace akce pro získání konkrétního úkolu.
